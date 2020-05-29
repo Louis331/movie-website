@@ -1,0 +1,48 @@
+body {
+    font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+    min-height: 100%;
+}
+
+.content {
+    background-color: blanchedalmond;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    text-align: center;
+}
+
+a {
+    color: #00B7FF;
+    padding-right: 0.5em;
+    font-size: 30px;
+}
+
+ul {
+    list-style-position: inside;
+    display: inline-block;
+    text-align: left;
+}
+
+li {
+    padding-top: 0.1em;
+}
+
+html {
+    background-color: blanchedalmond;
+}
+
+li:first-child {
+    padding-top: 0em;
+}
+
+.nav-bar {
+    background-color: #d1d1d1;
+    padding: 3em;
+}
+
+.error {
+    color: red;
+}
+
+label {
+    padding-right: 0.5em;
+}

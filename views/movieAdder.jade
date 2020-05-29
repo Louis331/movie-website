@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    h1 Add movie
+    form(action='/add-movie', method='post')
+        p(class='error') #{error}
+        label Enter a movie
+        input(name='movie')
+        input(type='submit')
