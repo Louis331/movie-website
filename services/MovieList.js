@@ -1,8 +1,8 @@
 const db = require('./db.js');
 const global = require('../global.js');
 
-const table = global.MOVIE_TABLE
-const blackListTable = process.env.BLACK_LIST_TABLE
+const table = global.MOVIE_TABLE;
+const blackListTable = global.BLACK_LIST;
 
 
 module.exports.getAllMovies = async function(ta) {
@@ -21,12 +21,35 @@ module.exports.getAllMovies = async function(ta) {
 
 }
 
+module.exports.getRandomMovie = async function() {
+
+    movie = ''
+
+    await module.exports.getAllMovies(table).then(data => {
+        movies = Object.values(data);
+        randomNum = Math.floor(Math.random() * movies.length);
+        movie = movies[randomNum];
+    });
+
+    return movie;
+}
+
+module.exports.getNumberOfMovies = async function() {
+
+    movies = await module.exports.getAllMovies(table);
+
+    return Object.keys(movies).length;
+
+}
+
 module.exports.addMovie = async function(movie) {
 
     movieAdded = false
 
     existingId = await module.exports.checkMovieExists(movie, table)
     blackListId = await module.exports.checkMovieExists(movie, blackListTable)
+
+    console.log(blackListId)
 
     await module.exports.getCurrentId().then(id => {
         if (!existingId && !blackListId) {
@@ -39,6 +62,7 @@ module.exports.addMovie = async function(movie) {
 
     return movieAdded;
 }
+
 module.exports.checkMovieExists = async function(movie, ta) {
 
     id = '';
@@ -54,6 +78,20 @@ module.exports.checkMovieExists = async function(movie, ta) {
     });
 
     return id;
+}
+
+module.exports.removeMovie = async function(movie) {
+
+    beenRemoved = false
+
+    await module.exports.checkMovieExists(movie, table).then(id => {
+        if (id) {
+            db.deleteItem(table, id);
+            beenRemoved = true;
+        }
+    });
+
+    return beenRemoved;
 }
 
 module.exports.updateId = function(newId) {
